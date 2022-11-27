@@ -2,6 +2,7 @@ package be.helb.PierrePlay.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name="Users")
@@ -9,11 +10,21 @@ public class User implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
     private String username;
     private String email;
     private String password;
     private Integer points;
+    @OneToMany(mappedBy = "user")
+    Set<OwnsGame> ownedGames;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_achievements",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "achievement_id"))
+    Set<Achievement> achievements;
 
     public String getUsername() {
         return username;
@@ -47,11 +58,27 @@ public class User implements Serializable
         this.points = points;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Set<OwnsGame> getOwnedGames() {
+        return ownedGames;
+    }
+
+    public void setOwnedGames(Set<OwnsGame> ownedGames) {
+        this.ownedGames = ownedGames;
+    }
+
+    public Set<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(Set<Achievement> achievements) {
+        this.achievements = achievements;
     }
 }

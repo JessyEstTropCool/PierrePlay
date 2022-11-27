@@ -11,7 +11,8 @@ public class Game implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long game_id;
+    @Column(name = "game_id")
+    private Long gameId;
     private String title;
     private String description;
     private Integer pegi;
@@ -31,12 +32,26 @@ public class Game implements Serializable
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
     Set<Tag> tags;
 
-    public Long getGame_id() {
-        return game_id;
+    @OneToMany(mappedBy = "game")
+    Set<OwnsGame> ownedGames;
+
+    @ManyToOne
+    @JoinColumn(name = "franchise_id")
+    private Franchise franchise;
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_platforms",
+            joinColumns = @JoinColumn(name = "game_id"),
+            inverseJoinColumns = @JoinColumn(name = "platform_id"))
+    Set<Platform> platforms;
+
+    public Long getGameId() {
+        return gameId;
     }
 
-    public void setGame_id(Long game_id) {
-        this.game_id = game_id;
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 
     public String getTitle() {
@@ -125,5 +140,28 @@ public class Game implements Serializable
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+    public Set<OwnsGame> getOwnedGames() {
+        return ownedGames;
+    }
+
+    public void setOwnedGames(Set<OwnsGame> ownedGames) {
+        this.ownedGames = ownedGames;
+    }
+
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(Franchise franchise) {
+        this.franchise = franchise;
+    }
+
+    public Set<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(Set<Platform> platforms) {
+        this.platforms = platforms;
     }
 }
