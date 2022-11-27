@@ -3,6 +3,7 @@ package be.helb.PierrePlay.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name="Games")
@@ -10,7 +11,7 @@ public class Game implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long game_id;
     private String title;
     private String description;
     private Integer pegi;
@@ -23,13 +24,19 @@ public class Game implements Serializable
     @Column(name = "inapppurchases")
     private Boolean inAppPurchases;
     private Boolean adverts;
+    @ManyToMany
+    @JoinTable(
+        name = "game_tags",
+        joinColumns = @JoinColumn(name = "game_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    Set<Tag> tags;
 
-    public Long getId() {
-        return id;
+    public Long getGame_id() {
+        return game_id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGame_id(Long game_id) {
+        this.game_id = game_id;
     }
 
     public String getTitle() {
@@ -110,5 +117,13 @@ public class Game implements Serializable
 
     public void setAdverts(Boolean adverts) {
         this.adverts = adverts;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
