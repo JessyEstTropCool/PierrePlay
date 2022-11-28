@@ -1,5 +1,7 @@
 package be.helb.PierrePlay.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Tag
     private String name;
     private String description;
     @ManyToMany(mappedBy = "tags")
+    @JsonBackReference
     Set<Game> taggedGames;
 
     public Long getTag_id() {

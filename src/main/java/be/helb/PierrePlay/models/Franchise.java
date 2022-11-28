@@ -1,5 +1,7 @@
 package be.helb.PierrePlay.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Franchise
     private String name;
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonManagedReference
     private Company company;
 
     public Long getFranchiseId() {

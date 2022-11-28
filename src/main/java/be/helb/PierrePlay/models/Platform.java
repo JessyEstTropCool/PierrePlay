@@ -1,5 +1,8 @@
 package be.helb.PierrePlay.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,8 +18,10 @@ public class Platform
     private Integer generation;
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonManagedReference
     private Company company;
     @ManyToMany(mappedBy = "platforms")
+    @JsonBackReference
     Set<Game> compatibleGames;
 
     public Long getPlatformId() {

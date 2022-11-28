@@ -1,5 +1,8 @@
 package be.helb.PierrePlay.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,13 +33,16 @@ public class Game implements Serializable
         name = "game_tags",
         joinColumns = @JoinColumn(name = "game_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @JsonManagedReference
     Set<Tag> tags;
 
     @OneToMany(mappedBy = "game")
+    @JsonBackReference
     Set<OwnsGame> ownedGames;
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
+    @JsonManagedReference
     private Franchise franchise;
 
     @ManyToMany
@@ -44,6 +50,7 @@ public class Game implements Serializable
             name = "game_platforms",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id"))
+    @JsonManagedReference
     Set<Platform> platforms;
 
     public Long getGameId() {

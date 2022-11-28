@@ -1,6 +1,7 @@
 package be.helb.PierrePlay.models;
 
 import be.helb.PierrePlay.models.keys.OwnsGameKey;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -14,11 +15,13 @@ public class OwnsGame
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private User user;
 
     @ManyToOne
     @MapsId("gameId")
     @JoinColumn(name = "game_id")
+    @JsonManagedReference
     private Game game;
 
     private Integer stars;
