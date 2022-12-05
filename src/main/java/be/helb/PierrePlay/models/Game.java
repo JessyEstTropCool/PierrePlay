@@ -53,6 +53,10 @@ public class Game implements Serializable
     @JsonManagedReference
     Set<Platform> platforms;
 
+    public Game() {}
+
+    public Game(String title) { this.title = title; }
+
     public Long getGameId() {
         return gameId;
     }
