@@ -32,4 +32,16 @@ public class GameController
     {
         return gameService.getByRating(pegi, esrb, cero);
     }
+
+    @PostMapping(path="/add") // Map ONLY POST Requests
+    public @ResponseBody String addNewGame(@RequestParam String name, @RequestParam String esrb) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+
+        Game n = new Game();
+        n.setTitle(name);
+        n.setEsrb(esrb);
+        gameService.save(n);
+        return n.toString();
+    }
 }

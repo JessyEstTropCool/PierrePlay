@@ -22,9 +22,6 @@ public class GameServiceTest
 
         gameDao = EasyMock.mock(GameDao.class);
         EasyMock.expect(gameDao.findAll()).andReturn(games);
-        EasyMock.expect(gameDao.findAll()).andReturn(games);
-        EasyMock.expect(gameDao.findAll()).andReturn(games);
-        EasyMock.expect(gameDao.findAll()).andReturn(games);
         gameService = new GameService(gameDao);
         EasyMock.replay(gameDao);
         int result = gameService.getAll().size();

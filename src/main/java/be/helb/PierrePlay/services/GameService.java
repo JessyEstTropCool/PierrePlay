@@ -35,4 +35,6 @@ public class GameService {
     }
 
     public List<Game> getByTitle(String title) { return gameDao.findByTitle(title); }
+
+    public void save(Game game) { gameDao.save(game); }
 }
