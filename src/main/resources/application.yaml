@@ -1,16 +1,21 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/pierre_play
-    username: pierre
-    password: amXU-d/Och!Mo9pC
-    driverClassName: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/pierre_play
+    #username: pierre
+    #password: amXU-d/Och!Mo9pC
+    #driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:dbcool
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
   jpa:
-    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    #database-platform: org.hibernate.dialect.H2Dialect
-    #defer-datasource-initialization: true
+    #hibernate:
+    #  ddl-auto: update
+    #show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+  h2:
+    console.enabled: true
 springdoc:
   swagger-ui:
     path: /swagger
