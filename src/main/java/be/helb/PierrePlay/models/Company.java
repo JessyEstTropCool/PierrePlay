@@ -1,6 +1,7 @@
 package be.helb.PierrePlay.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="Companies")
@@ -13,6 +14,10 @@ public class Company
     private String name;
     private String email;
     private String address;
+    @OneToMany(mappedBy ="company")
+    private Set<Franchise> franchises;
+    @OneToMany(mappedBy ="company")
+    private Set<Platform> platforms;
 
     public Long getCompanyId() {
         return companyId;
@@ -44,5 +49,21 @@ public class Company
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<Franchise> getFranchises() {
+        return franchises;
+    }
+
+    public void setFranchises(Set<Franchise> franchises) {
+        this.franchises = franchises;
+    }
+
+    public Set<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(Set<Platform> platforms) {
+        this.platforms = platforms;
     }
 }

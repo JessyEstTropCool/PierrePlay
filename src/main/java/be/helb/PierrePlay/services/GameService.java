@@ -15,6 +15,7 @@ public class GameService {
 
     @Autowired
     private GameDao gameDao;
+
     public GameService(GameDao gameDao) {
         this.gameDao = gameDao;
     }
