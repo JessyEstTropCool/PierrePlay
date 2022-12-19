@@ -2,12 +2,15 @@
 
 **PierrePlay : Mini Google Play tourné en jeu, avec des éléments de warioware**
 
+![PierrePlay Logo](Doc/PierrePlayFlat.png)
+
 ---
 
 Contient :
-- Absolument rien
+- Backend en SpringBoot
+- Frontend en React (peut-être)
 
-[Pas encore de consignes, oups](https://ecampus2223.helb-prigogine.be/pluginfile.php/216885/mod_resource/content/0/enonce_dotnet.pdf)
+[Plus d'info dans le fichier de consignes](https://ecampus2223.helb-prigogine.be/pluginfile.php/221157/mod_resource/content/1/Projet%20%C3%A9nonc%C3%A9.pdf)
 
 Aussi disponible dans le fichier [enonce_dotnet.pdf](https://github.com/helb-prigogine/BAC3-2223-DOTNET-jessy.adam/blob/main/enonce_dotnet.pdf)
 
