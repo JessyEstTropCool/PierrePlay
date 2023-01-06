@@ -24,6 +24,11 @@ public class Company
     @JsonManagedReference(value="company-platform")
     private Set<Platform> platforms;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference(value="user-company")
+    private User owner;
+
     public Long getCompanyId() {
         return companyId;
     }

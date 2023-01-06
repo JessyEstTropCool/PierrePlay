@@ -39,6 +39,10 @@ public class User implements Serializable//, UserDetails
     @JsonManagedReference(value="user-review")
     private Set<Review> reviews;
 
+    @OneToMany(mappedBy = "owner")
+    @JsonManagedReference(value="user-company")
+    private Set<Company> companies;
+
     public String getUsername() {
         return username;
     }
@@ -101,5 +105,13 @@ public class User implements Serializable//, UserDetails
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(Set<Company> companies) {
+        this.companies = companies;
     }
 }

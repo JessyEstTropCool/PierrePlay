@@ -26,7 +26,7 @@ public class GameService {
 
     public List<Game> getAll() { return gameDao.findAll(); }
 
-    public Optional<Game> getById(Long id) { return gameDao.findById(id); }
+    public Game getById(Long id) { return gameDao.findById(id).orElse(null); }
 
     public List<Game> getByRating(Integer pegi) {
         return gameDao.findByPegi(pegi);
@@ -34,5 +34,5 @@ public class GameService {
 
     public List<Game> getByTitle(String title) { return gameDao.findByTitle(title); }
 
-    public void save(Game game) { gameDao.save(game); }
+    public Game save(Game game) { return gameDao.save(game); }
 }

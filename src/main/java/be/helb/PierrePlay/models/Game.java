@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -20,7 +21,10 @@ public class Game implements Serializable
     private String title;
     private String description;
     private Integer pegi;
-    private String boxart;
+    @Lob
+    private byte[] boxart;
+    @Column(name = "boxartname")
+    private String boxartName;
     private Double price;
     @Column(name = "publishdate")
     private LocalDate publishDate;
@@ -95,12 +99,20 @@ public class Game implements Serializable
         this.pegi = pegi;
     }
 
-    public String getBoxart() {
+    public byte[] getBoxart() {
         return boxart;
     }
 
-    public void setBoxart(String boxart) {
+    public void setBoxart(byte[] boxart) {
         this.boxart = boxart;
+    }
+
+    public String getBoxartName() {
+        return boxartName;
+    }
+
+    public void setBoxartName(String boxartName) {
+        this.boxartName = boxartName;
     }
 
     public Double getPrice() {
