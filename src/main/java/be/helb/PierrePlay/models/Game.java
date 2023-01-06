@@ -1,7 +1,6 @@
 package be.helb.PierrePlay.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name="Games")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "gameId")
 public class Game implements Serializable
 {
     @Id
@@ -19,8 +20,6 @@ public class Game implements Serializable
     private String title;
     private String description;
     private Integer pegi;
-    private String esrb;
-    private String cero;
     private String boxart;
     private Double price;
     @Column(name = "publishdate")
@@ -33,16 +32,16 @@ public class Game implements Serializable
         name = "game_tags",
         joinColumns = @JoinColumn(name = "game_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @JsonManagedReference
-    Set<Tag> tags;
+    private Set<Tag> tags;
 
     @OneToMany(mappedBy = "game")
-    @JsonBackReference
-    Set<OwnsGame> ownedGames;
+    @JsonManagedReference(value="own-game")
+    @JsonIgnore
+    private Set<OwnsGame> ownedGames;
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
-    @JsonManagedReference
+    @JsonBackReference(value="game-franchise")
     private Franchise franchise;
 
     @ManyToMany
@@ -50,8 +49,15 @@ public class Game implements Serializable
             name = "game_platforms",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id"))
-    @JsonManagedReference
-    Set<Platform> platforms;
+    private Set<Platform> platforms;
+
+    @OneToMany(mappedBy = "game")
+    @JsonManagedReference(value="game-achievement")
+    private Set<Achievement> achievements;
+
+    @OneToMany(mappedBy = "subject")
+    @JsonManagedReference(value="game-review")
+    private Set<Review> reviews;
 
     public Game() {}
 
@@ -87,22 +93,6 @@ public class Game implements Serializable
 
     public void setPegi(Integer pegi) {
         this.pegi = pegi;
-    }
-
-    public String getEsrb() {
-        return esrb;
-    }
-
-    public void setEsrb(String esrb) {
-        this.esrb = esrb;
-    }
-
-    public String getCero() {
-        return cero;
-    }
-
-    public void setCero(String cero) {
-        this.cero = cero;
     }
 
     public String getBoxart() {
@@ -174,5 +164,21 @@ public class Game implements Serializable
 
     public void setPlatforms(Set<Platform> platforms) {
         this.platforms = platforms;
+    }
+
+    public Set<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(Set<Achievement> achievements) {
+        this.achievements = achievements;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

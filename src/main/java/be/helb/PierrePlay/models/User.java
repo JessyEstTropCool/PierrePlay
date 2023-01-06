@@ -1,7 +1,9 @@
 package be.helb.PierrePlay.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -10,19 +12,20 @@ import java.util.Set;
 
 @Entity
 @Table(name="Users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "userId")
 public class User implements Serializable//, UserDetails
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @JsonManagedReference
     private Long userId;
     private String username;
     private String email;
     private String password;
     private Integer points;
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @JsonManagedReference(value="user-own")
     Set<OwnsGame> ownedGames;
 
     @ManyToMany
@@ -30,8 +33,11 @@ public class User implements Serializable//, UserDetails
             name = "user_achievements",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "achievement_id"))
-    @JsonManagedReference
     Set<Achievement> achievements;
+
+    @OneToMany(mappedBy = "author")
+    @JsonManagedReference(value="user-review")
+    private Set<Review> reviews;
 
     public String getUsername() {
         return username;
@@ -87,5 +93,13 @@ public class User implements Serializable//, UserDetails
 
     public void setAchievements(Set<Achievement> achievements) {
         this.achievements = achievements;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

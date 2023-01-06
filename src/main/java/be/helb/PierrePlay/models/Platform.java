@@ -18,11 +18,11 @@ public class Platform
     private Integer generation;
     @ManyToOne
     @JoinColumn(name = "company_id")
-    @JsonManagedReference
+    @JsonBackReference(value="company-platform")
     private Company company;
+
     @ManyToMany(mappedBy = "platforms")
-    @JsonBackReference
-    Set<Game> compatibleGames;
+    private Set<Game> compatibleGames;
 
     public Long getPlatformId() {
         return platformId;

@@ -15,7 +15,6 @@ public class Tag
     private String name;
     private String description;
     @ManyToMany(mappedBy = "tags")
-    @JsonBackReference
     Set<Game> taggedGames;
 
     public Long getTag_id() {

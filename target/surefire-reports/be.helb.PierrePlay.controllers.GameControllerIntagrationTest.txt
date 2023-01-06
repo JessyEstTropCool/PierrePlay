@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: be.helb.PierrePlay.controllers.GameControllerIntagrationTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.373 s <<< FAILURE! - in be.helb.PierrePlay.controllers.GameControllerIntagrationTest
+whenRequestGet_ThenOK  Time elapsed: 1.366 s  <<< ERROR!
+java.net.ConnectException: Connection refused: connect
+	at be.helb.PierrePlay.controllers.GameControllerIntagrationTest.whenRequestGet_ThenOK(GameControllerIntagrationTest.java:11)
+

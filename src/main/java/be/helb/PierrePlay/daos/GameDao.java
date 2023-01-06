@@ -9,6 +9,4 @@ public interface GameDao extends JpaRepository<Game, Long>
 {
     List<Game> findByTitle(String title);
     List<Game> findByPegi(int pegi);
-    List<Game> findByEsrb(String esrb);
-    List<Game> findByCero(String cero);
 }

@@ -18,7 +18,7 @@ public class GameController
     public List<Game> gameList(@RequestParam(required = false) String title, @RequestParam(required = false) Integer pegi)
     {
         if (title != null) return gameService.getByTitle(title);
-        if (pegi != null) return gameService.getByRating(pegi, null, null);
+        if (pegi != null) return gameService.getByRating(pegi);
         return gameService.getAll();
     }
 
@@ -27,20 +27,20 @@ public class GameController
         return gameService.getById(id);
     }
 
-    @GetMapping("games/rating")
-    public List<Game> gameList(@RequestParam(required = false) Integer pegi, @RequestParam(required = false) String esrb, @RequestParam(required = false) String cero)
+    @GetMapping("games/rating/{pegi}")
+    public List<Game> gameList(@PathVariable Integer pegi)
     {
-        return gameService.getByRating(pegi, esrb, cero);
+        return gameService.getByRating(pegi);
     }
 
     @PostMapping(path="games/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewGame(@RequestParam String name, @RequestParam String esrb) {
+    public @ResponseBody String addNewGame(@RequestParam String name, @RequestParam Integer pegi) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
         Game n = new Game();
         n.setTitle(name);
-        n.setEsrb(esrb);
+        n.setPegi(pegi);
         gameService.save(n);
         return n.toString();
     }

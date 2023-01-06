@@ -1,6 +1,7 @@
 package be.helb.PierrePlay.models;
 
 import be.helb.PierrePlay.models.keys.OwnsGameKey;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -10,22 +11,19 @@ import javax.persistence.*;
 public class OwnsGame
 {
     @EmbeddedId
-    OwnsGameKey id;
+    private OwnsGameKey id;
 
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonBackReference(value="user-own")
     private User user;
 
     @ManyToOne
     @MapsId("gameId")
     @JoinColumn(name = "game_id")
-    @JsonManagedReference
+    @JsonBackReference(value="own-game")
     private Game game;
-
-    private Integer stars;
-    private String review;
     private Integer hours;
     private Boolean downloaded;
 
@@ -51,22 +49,6 @@ public class OwnsGame
 
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    public Integer getStars() {
-        return stars;
-    }
-
-    public void setStars(Integer stars) {
-        this.stars = stars;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public Integer getHours() {

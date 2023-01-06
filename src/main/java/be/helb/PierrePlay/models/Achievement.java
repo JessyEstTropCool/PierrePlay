@@ -1,6 +1,7 @@
 package be.helb.PierrePlay.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -18,10 +19,10 @@ public class Achievement
     private String description;
     @ManyToOne
     @JoinColumn(name = "game_id")
-    @JsonManagedReference
+    @JsonBackReference(value="game-achievement")
     private Game game;
     @ManyToMany(mappedBy = "achievements")
-    @JsonBackReference
+    @JsonIgnore
     Set<User> users;
 
     public Long getAchivementId() {

@@ -28,11 +28,8 @@ public class GameService {
 
     public Optional<Game> getById(Long id) { return gameDao.findById(id); }
 
-    public List<Game> getByRating(Integer pegi, String esrb, String cero) {
-        if (pegi != null) return gameDao.findByPegi(pegi);
-        if (esrb != null) return gameDao.findByEsrb(esrb);
-        if (cero != null) return gameDao.findByCero(cero);
-        else return new ArrayList<Game>();
+    public List<Game> getByRating(Integer pegi) {
+        return gameDao.findByPegi(pegi);
     }
 
     public List<Game> getByTitle(String title) { return gameDao.findByTitle(title); }

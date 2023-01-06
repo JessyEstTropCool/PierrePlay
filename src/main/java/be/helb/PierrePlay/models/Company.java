@@ -1,5 +1,8 @@
 package be.helb.PierrePlay.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,8 +18,10 @@ public class Company
     private String email;
     private String address;
     @OneToMany(mappedBy ="company")
+    @JsonManagedReference(value="company-franchise")
     private Set<Franchise> franchises;
     @OneToMany(mappedBy ="company")
+    @JsonManagedReference(value="company-platform")
     private Set<Platform> platforms;
 
     public Long getCompanyId() {
