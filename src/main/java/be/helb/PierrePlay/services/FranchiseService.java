@@ -2,6 +2,7 @@ package be.helb.PierrePlay.services;
 
 import be.helb.PierrePlay.daos.FranchiseDao;
 import be.helb.PierrePlay.models.Franchise;
+import be.helb.PierrePlay.models.Franchise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,12 @@ public class FranchiseService {
     public List<Franchise> getAll() { return franchiseDao.findAll(); }
 
     public Franchise getById(Long id) { return franchiseDao.findById(id).orElse(null); }
+
+    public Franchise save(Franchise franchise) { return franchiseDao.save(franchise); }
+
+    public void delete(Franchise franchise) { franchiseDao.delete(franchise); }
+
+    public void update(Franchise franchise) { franchiseDao.save(franchise); }
 
     public FranchiseDao getFranchiseDao() {
         return franchiseDao;

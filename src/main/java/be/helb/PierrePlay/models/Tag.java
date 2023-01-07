@@ -1,7 +1,5 @@
 package be.helb.PierrePlay.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,18 +9,18 @@ public class Tag
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tag_id;
+    private Long tagId;
     private String name;
     private String description;
     @ManyToMany(mappedBy = "tags")
     Set<Game> taggedGames;
 
-    public Long getTag_id() {
-        return tag_id;
+    public Long getTagId() {
+        return tagId;
     }
 
-    public void setTag_id(Long tag_id) {
-        this.tag_id = tag_id;
+    public void setTagId(Long tagId) {
+        this.tagId = tagId;
     }
 
     public String getName() {

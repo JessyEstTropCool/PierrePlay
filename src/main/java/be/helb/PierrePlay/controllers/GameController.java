@@ -1,5 +1,6 @@
 package be.helb.PierrePlay.controllers;
 
+import be.helb.PierrePlay.models.Game;
 import be.helb.PierrePlay.services.GameService;
 import be.helb.PierrePlay.models.Game;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -47,16 +48,36 @@ public class GameController
         return gameService.getByRating(pegi);
     }
 
-    @PostMapping(path="games/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewGame(@RequestParam String name, @RequestParam Integer pegi) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
 
-        Game n = new Game();
-        n.setTitle(name);
-        n.setPegi(pegi);
-        gameService.save(n);
-        return n.toString();
+
+    @PostMapping(path="games/add")
+    public Game addGame(@RequestBody Game game) {
+        game.setGameId(null);
+        gameService.save(game);
+        return game;
+    }
+
+    @DeleteMapping(path="games/{id}")
+    public @ResponseBody String deleteGame(@PathVariable long id) {
+        Game game = gameService.getById(id);
+
+        if ( game != null )
+        {
+            gameService.delete(game);
+            return "Delete Successfully";
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
+    }
+
+    @PutMapping(path="games/{id}")
+    public Game updateGame(@PathVariable long id, @RequestBody Game game) {
+        game.setGameId(id);
+        if (gameService.getById(id) != null)
+        {
+            gameService.save(game);
+            return game;
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
     }
 
     @PostMapping(path="/games/{id}/boxart/set", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

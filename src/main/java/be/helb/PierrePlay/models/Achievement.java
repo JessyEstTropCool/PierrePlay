@@ -2,7 +2,6 @@ package be.helb.PierrePlay.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,7 +13,7 @@ public class Achievement
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "achivement_id")
-    private Long achivementId;
+    private Long achievementId;
     private String name;
     private String description;
     @ManyToOne
@@ -25,12 +24,12 @@ public class Achievement
     @JsonIgnore
     Set<User> users;
 
-    public Long getAchivementId() {
-        return achivementId;
+    public Long getAchievementId() {
+        return achievementId;
     }
 
-    public void setAchivementId(Long achivementId) {
-        this.achivementId = achivementId;
+    public void setAchievementId(Long achievementId) {
+        this.achievementId = achievementId;
     }
 
     public String getName() {

@@ -2,7 +2,7 @@ package be.helb.PierrePlay.services;
 
 import be.helb.PierrePlay.daos.AchievementDao;
 import be.helb.PierrePlay.models.Achievement;
-import be.helb.PierrePlay.models.Game;
+import be.helb.PierrePlay.models.Achievement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +26,10 @@ public class AchievementService {
     public void setAchievementDao(AchievementDao achievementDao) {
         this.achievementDao = achievementDao;
     }
+
+    public Achievement save(Achievement achievement) { return achievementDao.save(achievement); }
+
+    public void delete(Achievement achievement) { achievementDao.delete(achievement); }
+
+    public void update(Achievement achievement) { achievementDao.save(achievement); }
 }

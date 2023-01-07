@@ -22,6 +22,7 @@ public class Game implements Serializable
     private String description;
     private Integer pegi;
     @Lob
+    @JsonIgnore
     private byte[] boxart;
     @Column(name = "boxartname")
     private String boxartName;

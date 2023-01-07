@@ -1,6 +1,7 @@
 package be.helb.PierrePlay.services;
 
 import be.helb.PierrePlay.models.Game;
+import be.helb.PierrePlay.models.Game;
 import be.helb.PierrePlay.daos.GameDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,8 @@ public class GameService {
     public List<Game> getByTitle(String title) { return gameDao.findByTitle(title); }
 
     public Game save(Game game) { return gameDao.save(game); }
+
+    public void delete(Game game) { gameDao.delete(game); }
+
+    public void update(Game game) { gameDao.save(game); }
 }

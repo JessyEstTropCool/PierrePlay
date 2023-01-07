@@ -2,6 +2,7 @@ package be.helb.PierrePlay.services;
 
 import be.helb.PierrePlay.daos.TagDao;
 import be.helb.PierrePlay.models.Tag;
+import be.helb.PierrePlay.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,12 @@ public class TagService {
     public List<Tag> getAll() { return tagDao.findAll(); }
 
     public Tag getById(Long id) { return tagDao.findById(id).orElse(null); }
+
+    public Tag save(Tag tag) { return tagDao.save(tag); }
+
+    public void delete(Tag tag) { tagDao.delete(tag); }
+
+    public void update(Tag tag) { tagDao.save(tag); }
 
     public TagDao getTagDao() {
         return tagDao;
