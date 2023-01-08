@@ -1,13 +1,19 @@
 package be.helb.PierrePlay.controllers;
 
 import be.helb.PierrePlay.models.Game;
+import be.helb.PierrePlay.models.OwnsGame;
+import be.helb.PierrePlay.models.User;
+import be.helb.PierrePlay.services.CompanyService;
 import be.helb.PierrePlay.services.GameService;
 import be.helb.PierrePlay.models.Game;
+import be.helb.PierrePlay.services.UserService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,20 +26,27 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class GameController
 {
-    @Autowired
     private GameService gameService;
+    private UserService userService;
+
+    @Autowired
+    public GameController(GameService gameService, UserService userService)
+    {
+        this.gameService = gameService;
+        this.userService = userService;
+    }
 
     @GetMapping("games")
-    public List<Game> gameList(@RequestParam(required = false) String title, @RequestParam(required = false) Integer pegi)
+    public List<Game> gameList(@RequestParam(required = false) String title)
     {
-        if (title != null) return gameService.getByTitle(title);
-        if (pegi != null) return gameService.getByRating(pegi);
+        if (title != null) return gameService.search(title);
         return gameService.getAll();
     }
 
@@ -48,7 +61,36 @@ public class GameController
         return gameService.getByRating(pegi);
     }
 
+    @GetMapping("games/user")
+    public List<Game> userGames()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = (String) auth.getPrincipal();
+        User user = userService.getByUsername(username);
+        List<Long> ids = new ArrayList<Long>();
 
+        for (OwnsGame own : user.getOwnedGames())
+        {
+            ids.add(own.getId().getGameId());
+        }
+
+        return gameService.getUserGames(ids);
+    }
+
+    @GetMapping("games/buy/{id}")
+    public List<Game> buyGame(@PathVariable Long id)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = (String) auth.getPrincipal();
+        User user = userService.getByUsername(username);
+        Game game = gameService.getById(id);
+
+
+
+        gameService.buyGame(game, user);
+
+        return userGames();
+    }
 
     @PostMapping(path="games/add")
     public Game addGame(@RequestBody Game game) {
@@ -74,7 +116,7 @@ public class GameController
         game.setGameId(id);
         if (gameService.getById(id) != null)
         {
-            gameService.save(game);
+            gameService.update(game);
             return game;
         }
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");

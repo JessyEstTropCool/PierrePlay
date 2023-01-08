@@ -43,6 +43,13 @@ public class User implements Serializable//, UserDetails
     @JsonManagedReference(value="user-company")
     private Set<Company> companies;
 
+    public User() {}
+
+    public User(String username, String password) {
+        setUsername(username);
+        setPassword(password);
+    }
+
     public String getUsername() {
         return username;
     }

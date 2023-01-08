@@ -16,6 +16,14 @@ public class OwnsGameKey implements Serializable
     @Column(name = "game_id")
     private Long gameId;
 
+    public OwnsGameKey()  {}
+
+    public OwnsGameKey(Long userId, Long gameId)
+    {
+        this.userId = userId;
+        this.gameId = gameId;
+    }
+
 
     public Long getUserId() {
         return userId;

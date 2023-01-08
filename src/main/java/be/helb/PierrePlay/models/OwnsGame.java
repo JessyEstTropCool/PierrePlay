@@ -27,6 +27,14 @@ public class OwnsGame
     private Integer hours;
     private Boolean downloaded;
 
+    public OwnsGame() {}
+
+    public OwnsGame(User user, Game game) {
+        this.user = user;
+        this.game = game;
+        this.id = new OwnsGameKey(user.getUserId(), game.getGameId());
+    }
+
     public OwnsGameKey getId() {
         return id;
     }

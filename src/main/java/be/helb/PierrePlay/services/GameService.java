@@ -1,24 +1,28 @@
 package be.helb.PierrePlay.services;
 
-import be.helb.PierrePlay.models.Game;
+import be.helb.PierrePlay.daos.OwnsGameDao;
 import be.helb.PierrePlay.models.Game;
 import be.helb.PierrePlay.daos.GameDao;
 
+import be.helb.PierrePlay.models.OwnsGame;
+import be.helb.PierrePlay.models.User;
+import be.helb.PierrePlay.models.keys.OwnsGameKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GameService {
 
-    @Autowired
     private GameDao gameDao;
+    private OwnsGameDao ownsGameDao;
 
-    public GameService(GameDao gameDao) {
+    @Autowired
+    public GameService(GameDao gameDao, OwnsGameDao ownsGameDao) {
         this.gameDao = gameDao;
+        this.ownsGameDao = ownsGameDao;
     }
 
     public GameDao getGameDao() { return gameDao; }
@@ -33,7 +37,18 @@ public class GameService {
         return gameDao.findByPegi(pegi);
     }
 
-    public List<Game> getByTitle(String title) { return gameDao.findByTitle(title); }
+    public List<Game> search(String title) { return gameDao.findByTitleContainsIgnoreCase(title); }
+
+    public List<Game> getUserGames(Collection<Long> ids) { return gameDao.findByGameIdIn(ids); }
+
+    public void buyGame(Game game, User user)
+    {
+        OwnsGame own = new OwnsGame();
+        own.setGame(game);
+        own.setUser(user);
+        own.setId(new OwnsGameKey(user.getUserId(), game.getGameId()));
+        ownsGameDao.save(own);
+    }
 
     public Game save(Game game) { return gameDao.save(game); }
 
