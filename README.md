@@ -23,7 +23,7 @@ Ces information peuvent bien sur être changées dans le fichier [application.ya
 
 [Plus d'info dans le fichier de consignes](https://ecampus2223.helb-prigogine.be/pluginfile.php/221157/mod_resource/content/1/Projet%20%C3%A9nonc%C3%A9.pdf)
 
-Aussi disponible dans le fichier [Projet énoncé.pdf](Projet énoncé.pdf)
+Aussi disponible dans le fichier [Projet énoncé.pdf](/Projet%20%C3%A9nonc%C3%A9.pdf)
 
 ---
 
