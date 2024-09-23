@@ -36,6 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
          "/v2/**",
          "/v3/**",
          "/login/**",
+         "/login",
          "/webjars/**"
  };
 
